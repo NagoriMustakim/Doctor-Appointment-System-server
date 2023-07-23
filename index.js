@@ -1,6 +1,8 @@
 const express = require('express')
 const colors = require('colors')
 const morgon = require('morgan')
+const connectDB = require('../server/config/db')
+const router = require('./routes/user.routes')
 require('dotenv').config()
 
 
@@ -9,16 +11,15 @@ const PORT = 4000
 
 app.use(express.json())
 app.use(morgon('dev'))
-
-
+app.use('/api/v1/user', router)
+connectDB()
 app.get('/', (req, res) => {
-    res.status(200).send({
-        message: 'Server running'
-    })
+    res.send("welocome to homepage")
+        .end()
 })
 
 
 
 app.listen(PORT, () => {
-    console.log(`Server listing on ${'http://localhost:4000'}`.bgMagenta.white);
+    console.log(`Server listing on ${`http://localhost:${PORT}`}`.bgMagenta.white);
 })
