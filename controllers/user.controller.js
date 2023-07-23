@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken')
 
 async function register(req, res) {
     try {
-        const mobileNum = req.body.mobile
-        const exisitingUser = await userModal.findOne({ mobileNum })
-        if (exisitingUser) return res.status(200).send({ message: "User Already Exist", success: false })
+        const exisitingUser = await userModal.findOne({ mobile: req.body.mobile })
+        console.log(exisitingUser);
+        if (exisitingUser) return res.status(200).send("User Already Exist")
         let password = req.body.password
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
